@@ -16,10 +16,14 @@ const submit = async function( event ) {
     name: name,
     birth_year: Number(birth_year),
     user_class: user_class,
+    age: 2026 - Number(birth_year)
   };
 
-  const response = await fetch( '/submit', {
-    method:'POST',
+  const response = await fetch('/submit', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+    },
     body: JSON.stringify(user_info)
   });
 
@@ -29,12 +33,18 @@ const submit = async function( event ) {
   await fetchInfo();
 }
 
-const deleteUser = async function(name) {
-  const response = await fetch(`/users/${name}`, {
-    method: 'DELETE'
-  });
-  const data = await response.json();
-  console.log(data);
+const deleteUser = async function(id) {
+  const response = await fetch('/remove', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        _id: id
+    })
+  })
+  const data = await response.json()
+  console.log(data)
 }
 
 const ageSort_oldest = function(users) {
@@ -50,8 +60,9 @@ const ageSort_youngest = function(users) {
 }
 
 let sort_order = 'oldest';
+
 const fetchInfo = async function() {
-  const response = await fetch('/users');
+  const response = await fetch('/docs');
   const users = await response.json();
   console.log(users);
 
@@ -82,7 +93,7 @@ const fetchInfo = async function() {
     const delete_button = document.createElement('button');
     delete_button.textContent = 'Delete';
     delete_button.addEventListener('click', async function() {
-      await deleteUser(user.name);
+      await deleteUser(user._id);
       await fetchInfo();
     });
     delete_cell.appendChild(delete_button);
