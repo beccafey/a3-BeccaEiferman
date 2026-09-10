@@ -2,11 +2,16 @@ require( 'dotenv' ).config()
 
 const express = require('express'),
     { MongoClient, ObjectId } = require("mongodb"),
+    cookie = require( 'cookie-session' ),
     app = express()
 
 app.use( express.static( 'public' ) )
 app.use( express.json() )
-
+app.use(express.urlencoded({ extended:true }) )
+app.use( cookie({
+  name: 'session',
+  keys: ['key1', 'key2']
+}))
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}/?appName=Cluster0`
 console.log( 'uri:', uri )
@@ -60,163 +65,70 @@ app.post( '/update', async (req,res) => {
 })
 
 
-
-//sign in stuff
-const express = require('express');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
-const MongoClient = require('mongodb').MongoClient;
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
- secret: 'your-secret-key',
- resave: true,
- saveUninitialized: true
-}));
-const port = 3000; // Replace with your desired port number
-// MongoDB connection string
-const dbUrl = 'mongodb://localhost:27017/login-page';
-
-MongoClient.connect(dbUrl, (err, client) => {
- if (err) throw err;
- const db = client.db('login-page');
- const usersCollection = db.collection('users');
-// Login route
- app.post('/login', (req, res) => {
- const { email, password } = req.body;
-usersCollection.findOne({ email }, (err, user) => {
- if (err) throw err;
-// User not found
- if (!user) {
- return res.status(401).send('Invalid email or password');
- }
-// Compare the provided password with the hashed password stored in the database
- bcrypt.compare(password, user.password, (err, result) => {
- if (err) throw err;
-if (result) {
- // Store user data in session
- req.session.user = user;
- res.redirect('/dashboard'); // Redirect to the dashboard page after successful login
- } else {
- res.status(401).send('Invalid email or password');
- }
- });
- });
- });
-// Start the server
- app.listen(port, () => {
- console.log(`Server is running on http://localhost:${port}`);
- });
-});
-
-
-
-
-
-
-
-
-//a2 code
-/* const http = require( 'http' ),
-      fs   = require( 'fs' ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you're testing this on your local machine.
-      // On Render, make sure `npm install` is your build command.
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000
-
-const appdata = [
-  { name: 'Becca', birth_year: 2006, user_class: 'Junior', age: 20 }
-]
-
-function findAge(user_info){
-  user_info.age = 2026 - user_info.birth_year;
-  return user_info;
-}
-
-const server = http.createServer( function( request,response ) {
-  if( request.method === 'GET' ) {
-    handleGet( request, response )    
-  }else if( request.method === 'POST' ){
-    handlePost( request, response ) 
-  }else if( request.method === 'DELETE') {
-    handleDelete( request, response );
-  }
+app.post( '/createAcct', async (req,res)=> {
+  // express.urlencoded will put your key value pairs 
+  // into an object, where the key is the name of each
+  // form field and the value is whatever the user entered
+  console.log( req.body )
   
+
+  const new_user = await collection.insertOne({
+    username: req.body.username,
+    password: req.body.password
+  })
+  console.log( "Account Created" )
+  req.session.login = true;
+  res.redirect('/page2.html')
 })
 
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+//sign in stuff
+app.post( '/login', async (req,res)=> {
+  // express.urlencoded will put your key value pairs 
+  // into an object, where the key is the name of each
+  // form field and the value is whatever the user entered
+  console.log( req.body )
+  
 
-  if( request.url === '/' ) {
-    sendFile( response, 'public/index.html' )
-  // had chatgpt help me with this cause i was getting errors
-  } else if (request.url === '/users') {
-    response.writeHead(200, "OK", {
-      'Content-Type': 'application/json'
-    })
-    response.end(JSON.stringify(appdata))
-  } else {
-    const filename = dir + request.url.slice(1)
-    sendFile(response, filename)
-  }
-}
-
-const handlePost = function( request, response ) {
-  let dataString = ''
-
-  request.on( 'data', function( data ) {
-      dataString += data 
+  const user = await collection.findOne({
+    username: req.body.username,
+    password: req.body.password
   })
 
-  request.on( 'end', function() {
-    const this_user = JSON.parse(dataString);
-    findAge(this_user);
-    appdata.push(this_user);
-    console.log(appdata);
-    response.writeHead( 200, "OK", {'Content-Type': 'application/json' })
-
-    // change this to incorporate data
-    response.end(JSON.stringify(appdata))
-  })
-}
-
-const handleDelete = function( request, response ){
-  const name = decodeURIComponent(request.url.replace('/users/', ''));
-  const index = appdata.findIndex(function(user) {
-    return user.name === name;
-  });
-  if (index !== -1) {
-    appdata.splice(index, 1);
+  // below is *just a simple authentication example* 
+  // for A3, you should check username / password combos in your database
+  if(user){
+    console.log( "Sign-In Sucsessful" )
+    req.session.login = true;
+    res.redirect('page2.html');
+  
+    
+    // since login was successful, send the user to the main content
+    // use redirect to avoid authentication problems when refreshing
+    // the page or using the back button, for details see:
+    // https://stackoverflow.com/questions/10827242/understanding-the-post-redirect-get-pattern 
+  }else{
+    // password incorrect, redirect back to login page
+    console.log( "Sign-In Failed" )
+    res.sendFile( __dirname + '/public/index.html' )
+    res.redirect('noacct.html');
   }
-  response.writeHead(200, 'OK', {
-    'Content-Type': 'application/json'
-  });
-  response.end(JSON.stringify(appdata));
-}
+})
 
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
+// add some middleware that always sends unauthenicaetd users to the login page
+app.use( function( req,res,next) {
+  if( req.session.login === true )
+    next()
+  else
+    res.sendFile( __dirname + '/public/index.html' )
+})
 
-   fs.readFile( filename, function( err, content ) {
 
-     // if the error = null, then we've loaded the file successfully
-     if( err === null ) {
 
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { 'Content-Type': type })
-       response.end( content )
+app.post( '/signin_redirect', async (req,res)=> {
+  res.redirect('/index.html')
+})
 
-     }else{
+// serve up static files in the directory public
+app.use( express.static('public') )
 
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( '404 Error: File Not Found' )
 
-     }
-   })
-}
-
-server.listen( process.env.PORT || port )
-*/

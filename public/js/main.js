@@ -107,6 +107,7 @@ const fetchInfo = async function() {
   
 }
 
+
 window.onload = async function() {
   const form = document.querySelector('form');
   form.onsubmit = submit;

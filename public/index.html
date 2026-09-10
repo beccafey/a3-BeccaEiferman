@@ -3,7 +3,6 @@
   <head>
     <title>CS4241 Assignment 3</title>
     <meta charset='utf-8' />
-    <script src='js/main.js'></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
     <link rel='stylesheet' href='css/main.css' />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,15 +18,17 @@
       <div class="box p-4">
         <h1>Welcome to Age Sort</h1>
           <p>
-          Sign In
+          Sign In or Create Account
           </p>
       </div>
     </div>
     
+
+
     <div class="container mt-4">
       <div class="box2 p-4">
 
-        <form id="signin_form">
+        <form action="/login" method='POST' id="signin_form">
           <fieldset>
             <div class="mb-3">
               <label for="username" class="form-label">Username *:</label>
@@ -35,17 +36,18 @@
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password *:</label>
-              <input type="text" id="password" name="password" class="form-control" required/>
+              <input type="password" id="password" name="password" class="form-control" required/>
             </div>
-            <p class="button">
-              <button type="submit" class="btn btn-primary btn-purple">Submit!</button>
-            </p>
+            <div class="d-flex justify-content-center align-items-center gap-3">
+              <button type="submit" formaction="/login" id="signin_button" class="btn btn-purple">Sign In</button>
+              <button type="submit" formaction="/createAcct" id="create_button" class="btn btn-purple">Create Account</button>
+            </div>
           </fieldset>
         </form>
       </div>
     
     </div>
-    
+  
 
   </body>
 </html>
