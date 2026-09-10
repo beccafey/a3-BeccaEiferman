@@ -47,6 +47,31 @@ const deleteUser = async function(id) {
   console.log(data)
 }
 
+const editUser = async function(id) {
+  const name = prompt('Enter new name:', user.name);
+  const birth_year = prompt('Enter new birth year:', user.birth_year);
+  const user_class = prompt('Enter new class:', user.user_class);
+
+  if (name === null || birth_year === null || user_class === null) {
+    return;
+  }
+
+  const response = await fetch('/update', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      _id: user._id,
+      name: name,
+      birth_year: birth_year,
+      user_class: user_class
+    })
+  });
+
+  const data = await response.json();
+  console.log(data);
+}
 const ageSort_oldest = function(users) {
   users.sort(function(user_a, user_b){
     return user_b.age - user_a.age;
@@ -97,11 +122,20 @@ const fetchInfo = async function() {
       await fetchInfo();
     });
     delete_cell.appendChild(delete_button);
+    const edit_cell = document.createElement('td');
+    const edit_button = document.createElement('button');
+    edit_button.textContent = 'Edit';
+    edit_button.addEventListener('click', async function() {
+      await editUser(user);
+      await fetchInfo();
+    });
+    edit_cell.appendChild(edit_button);
     row.appendChild(name_cell);
     row.appendChild(class_cell);
     row.appendChild(birth_year_cell);
     row.appendChild(age_cell);
     row.appendChild(delete_cell);
+    row.appendChild(edit_cell);
     age_table_body.appendChild(row);
   });
   

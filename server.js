@@ -22,7 +22,7 @@ let collection = null
 async function run() {
     await client.connect()
 
-    collection = await client.db("datatest").collection("test")
+    collection = await client.db("A3Database").collection("A3Collection")
 
     // route to get all docs
     app.get("/docs", async (req, res) => {
@@ -57,11 +57,21 @@ app.post( '/remove', async (req,res) => {
 })
 app.post( '/update', async (req,res) => {
   const result = await collection.updateOne(
-    { _id: new ObjectId( req.body._id ) },
-    { $set:{ name:req.body.name } }
+  { _id: new ObjectId(req.body._id) },
+    {
+      $set: {
+        name: req.body.name,
+        birth_year: Number(req.body.birth_year),
+        user_class: req.body.user_class,
+        age: 2026 - Number(req.body.birth_year)
+      }
+    }
   )
-
   res.json( result )
+})
+
+app.post( '/signin_redirect', async (req,res)=> {
+  res.redirect('/index.html')
 })
 
 
@@ -109,7 +119,6 @@ app.post( '/login', async (req,res)=> {
   }else{
     // password incorrect, redirect back to login page
     console.log( "Sign-In Failed" )
-    res.sendFile( __dirname + '/public/index.html' )
     res.redirect('noacct.html');
   }
 })
@@ -124,11 +133,5 @@ app.use( function( req,res,next) {
 
 
 
-app.post( '/signin_redirect', async (req,res)=> {
-  res.redirect('/index.html')
-})
-
 // serve up static files in the directory public
 app.use( express.static('public') )
-
-
