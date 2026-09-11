@@ -47,31 +47,44 @@ const deleteUser = async function(id) {
   console.log(data)
 }
 
-const editUser = async function(id) {
-  const name = prompt('Enter new name:', user.name);
-  const birth_year = prompt('Enter new birth year:', user.birth_year);
-  const user_class = prompt('Enter new class:', user.user_class);
+let currentUser = null;
+const editUser = function(user) {
+  currentUser = user;
+  console.log("edituserraun");
+  document.querySelector('#edit_name').value = user.name;
+  document.querySelector('#edit_year').value = user.birth_year;
+  document.querySelector('#edit_class').value = user.user_class;
+  document.querySelector('#edit_form_div').style.display = 'block';
+};
 
-  if (name === null || birth_year === null || user_class === null) {
-    return;
-  }
-
+document.querySelector('#edit_form').addEventListener('submit', async function(event) {
+  event.preventDefault();
+  console.log("submit thing works");
+  const name = document.querySelector('#edit_name').value;
+  const birth_year = document.querySelector('#edit_year').value;
+  const user_class = document.querySelector('#edit_class').value;
   const response = await fetch('/update', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      _id: user._id,
+      _id: currentUser._id,
       name: name,
       birth_year: birth_year,
       user_class: user_class
     })
   });
+  if (response.ok) {
+    document.querySelector('#edit_form_div').style.display = 'none';
+    fetchInfo();
+  }
+});
 
-  const data = await response.json();
-  console.log(data);
-}
+const closeForm = function() {
+  document.querySelector('#edit_form_div').style.display = 'none';
+};
+
 const ageSort_oldest = function(users) {
   users.sort(function(user_a, user_b){
     return user_b.age - user_a.age;
@@ -126,8 +139,7 @@ const fetchInfo = async function() {
     const edit_button = document.createElement('button');
     edit_button.textContent = 'Edit';
     edit_button.addEventListener('click', async function() {
-      await editUser(user);
-      await fetchInfo();
+      editUser(user);
     });
     edit_cell.appendChild(edit_button);
     row.appendChild(name_cell);
@@ -143,7 +155,7 @@ const fetchInfo = async function() {
 
 
 window.onload = async function() {
-  const form = document.querySelector('form');
+  const form = document.querySelector('#user_form');
   form.onsubmit = submit;
   //order stuff
   document.querySelector('#young_button').onclick = async function() {

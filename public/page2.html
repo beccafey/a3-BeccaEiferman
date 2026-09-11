@@ -3,7 +3,7 @@
   <head>
     <title>CS4241 Assignment 3</title>
     <meta charset='utf-8' />
-    <script src='js/main.js'></script>
+    <script src='js/main.js' defer></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
     <link rel='stylesheet' href='css/main.css' />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
       <div class="box p-4">
         <h1>Welcome to Age Sort</h1>
           <p>
-          Insert your Name, Birth Year, and your Class and we will sort by the age you turn in 2026!
+          Insert you and your friends' Name, Birth Year, and your Class and we will sort by the age you all turn in 2026!
           </p>
       </div>
     </div>
@@ -89,6 +89,37 @@
           </div>
     </div>
     
+
+    <div class="form-popup" id="edit_form_div">
+      <form id="edit_form" class="form-container">
+          <fieldset>
+            <legend>Insert New Information</legend>
+            <div class="mb-3">
+              <label for="name" class="form-label">Name *:</label>
+              <input type="text" id="edit_name" name="edit_name" class="form-control" required/>
+            </div>
+            <div class="mb-3">
+              <label for="birth_year" class="form-label">Birth Year *:</label>
+              <input type="number" id="edit_year" name="edit_year" min="0" max="2026" class="form-control" required/>
+            </div>
+            <div class="mb-3">
+              <label for="user_class" class="form-label">
+                <span>Class:</span>
+              </label>
+              <select id="edit_class" name="edit_class" class="form-select">
+                <option value="Freshman">Freshman</option>
+                <option value="Sophomore">Sophomore</option>
+                <option value="Junior">Junior</option>
+                <option value="Senior">Senior</option>
+              </select>
+            </div>
+            <p class="button">
+              <button type="submit" class="btn btn-primary btn-purple" id="save_update">Update</button>
+            </p>
+            <button type="button" class="btn btn-primary btn-purple cancel" onclick="closeForm()">Close</button>
+          </fieldset>
+        </form>
+    </div>
 
   </body>
 </html>
