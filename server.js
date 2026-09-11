@@ -83,6 +83,13 @@ app.post( '/signin_redirect', async (req,res)=> {
   res.redirect('/index.html')
 })
 
+app.post( '/alldata_redirect', async (req,res)=> {
+  res.redirect('/alldata.html')
+})
+
+app.post( '/userdata_redirect', async (req,res)=> {
+  res.redirect('/page2.html')
+})
 
 app.post( '/createAcct', async (req,res)=> {
   // express.urlencoded will put your key value pairs 
