@@ -44,7 +44,6 @@ const deleteUser = async function(id) {
     })
   })
   const data = await response.json()
-  console.log(data)
 }
 
 let currentUser = null;
@@ -59,7 +58,6 @@ const editUser = function(user) {
 
 document.querySelector('#edit_form').addEventListener('submit', async function(event) {
   event.preventDefault();
-  console.log("submit thing works");
   const name = document.querySelector('#edit_name').value;
   const birth_year = document.querySelector('#edit_year').value;
   const user_class = document.querySelector('#edit_class').value;

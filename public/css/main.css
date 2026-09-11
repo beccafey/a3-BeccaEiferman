@@ -1,6 +1,8 @@
 body {
   background: linear-gradient(180deg, #EA9FA0,#A69FEA);
   color:#A374AF;
+  min-height: 100vh;
+  margin: 0;
   font-family: "Radio Canada", sans-serif;
 }
 

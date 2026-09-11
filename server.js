@@ -18,16 +18,25 @@ console.log( 'uri:', uri )
 const client = new MongoClient( uri )
 
 let collection = null
+let signin_collection = null
 
 async function run() {
     await client.connect()
 
     collection = await client.db("A3Database").collection("A3Collection")
+    signin_collection = await client.db("A3Database").collection("A3UserInfo")
 
-    // route to get all docs
+
     app.get("/docs", async (req, res) => {
         if (collection !== null) {
             const docs = await collection.find({}).toArray()
+            res.json( docs )
+        }
+    })
+
+    app.get("/user_docs", async (req, res) => {
+        if (signin_collection !== null) {
+            const docs = await signin_collection.find({}).toArray()
             res.json( docs )
         }
     })
@@ -82,7 +91,7 @@ app.post( '/createAcct', async (req,res)=> {
   console.log( req.body )
   
 
-  const new_user = await collection.insertOne({
+  const new_user = await signin_collection.insertOne({
     username: req.body.username,
     password: req.body.password
   })
@@ -99,7 +108,7 @@ app.post( '/login', async (req,res)=> {
   console.log( req.body )
   
 
-  const user = await collection.findOne({
+  const user = await signin_collection.findOne({
     username: req.body.username,
     password: req.body.password
   })
