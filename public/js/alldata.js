@@ -26,7 +26,7 @@ const ageSort_youngest = function(users) {
 let sort_order = 'oldest';
 
 const fetchInfo = async function() {
-  const response = await fetch('/docs');
+  const response = await fetch('/alldocs');
   const users = await response.json();
   console.log(users);
 
@@ -45,6 +45,8 @@ const fetchInfo = async function() {
   //back to table
   users.forEach(function(user) {
     const row = document.createElement('tr');
+    const user_cell = document.createElement('td');
+    user_cell.textContent = user.username;
     const name_cell = document.createElement('td');
     name_cell.textContent = user.name;
     const class_cell = document.createElement('td');
@@ -53,27 +55,12 @@ const fetchInfo = async function() {
     birth_year_cell.textContent = user.birth_year;
     const age_cell = document.createElement('td');
     age_cell.textContent = user.age;
-    const delete_cell = document.createElement('td');
-    const delete_button = document.createElement('button');
-    delete_button.textContent = 'Delete';
-    delete_button.addEventListener('click', async function() {
-      await deleteUser(user._id);
-      await fetchInfo();
-    });
-    delete_cell.appendChild(delete_button);
-    const edit_cell = document.createElement('td');
-    const edit_button = document.createElement('button');
-    edit_button.textContent = 'Edit';
-    edit_button.addEventListener('click', async function() {
-      editUser(user);
-    });
-    edit_cell.appendChild(edit_button);
+    
+    row.appendChild(user_cell);
     row.appendChild(name_cell);
     row.appendChild(class_cell);
     row.appendChild(birth_year_cell);
     row.appendChild(age_cell);
-    row.appendChild(delete_cell);
-    row.appendChild(edit_cell);
     age_table_body.appendChild(row);
   });
   

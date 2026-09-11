@@ -29,6 +29,15 @@ async function run() {
 
     app.get("/docs", async (req, res) => {
         if (collection !== null) {
+            const docs = await collection.find({
+              username: req.session.user
+            }).toArray()
+            res.json( docs )
+        }
+    })
+
+    app.get("/alldocs", async (req, res) => {
+        if (collection !== null) {
             const docs = await collection.find({}).toArray()
             res.json( docs )
         }
@@ -54,7 +63,13 @@ app.use( (req,res,next) => {
 })
 
 app.post( '/submit', async (req,res) => {
-  const result = await collection.insertOne( req.body )
+  const result = await collection.insertOne({
+    username: req.session.user,
+    name: req.body.name,
+    birth_year: Number(req.body.birth_year),
+    user_class: req.body.user_class,
+    age: 2026 - Number(req.body.birth_year)
+  })
   res.json( result )
 })
 app.post( '/remove', async (req,res) => {
@@ -104,6 +119,7 @@ app.post( '/createAcct', async (req,res)=> {
   })
   console.log( "Account Created" )
   req.session.login = true;
+  req.session.user = req.body.username
   res.redirect('/page2.html')
 })
 
@@ -125,6 +141,7 @@ app.post( '/login', async (req,res)=> {
   if(user){
     console.log( "Sign-In Sucsessful" )
     req.session.login = true;
+    req.session.user = user.username;
     res.redirect('page2.html');
   
     
