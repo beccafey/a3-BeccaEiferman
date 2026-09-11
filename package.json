@@ -6,7 +6,9 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
-    "mongodb": "^7.6.0"
+    "mongodb": "^7.6.0",
+    "morgan": "^1.12.1",
+    "serve-favicon": "^2.5.1"
   },
   "engines": {
     "node": "16.x"
@@ -30,5 +32,8 @@
   "bugs": {
     "url": "https://github.com/beccafey/a3-BeccaEiferman/issues"
   },
-  "homepage": "https://github.com/beccafey/a3-BeccaEiferman#readme"
+  "homepage": "https://github.com/beccafey/a3-BeccaEiferman#readme",
+  "devDependencies": {
+    "@types/serve-favicon": "^2.5.7"
+  }
 }

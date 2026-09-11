@@ -12,7 +12,11 @@ I used the Bootstrap CSS framework for two reasons. First of all, the GitHub lin
 
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **Express Middleware Packages Used**: 
+- cookie-session: keeps track of which user is currently logged in.
+- serve-static: serves index.html
+- morgan: used to show my GET and POST requests in the terminal.
+- serve-favicon: I added a purple star favicon for my webpage.
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...

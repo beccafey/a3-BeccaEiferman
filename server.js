@@ -1,5 +1,8 @@
 require( 'dotenv' ).config()
 
+var favicon = require('serve-favicon');
+var path = require('path');
+
 const express = require('express'),
     { MongoClient, ObjectId } = require("mongodb"),
     cookie = require( 'cookie-session' ),
@@ -12,6 +15,11 @@ app.use( cookie({
   name: 'session',
   keys: ['key1', 'key2']
 }))
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+var morgan = require('morgan');
+app.use(morgan('dev'));
+
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}/?appName=Cluster0`
 console.log( 'uri:', uri )
