@@ -118,12 +118,29 @@ app.post( '/userdata_redirect', async (req,res)=> {
   res.redirect('/page2.html')
 })
 
+app.post( '/signout', async (req,res)=> {
+  res.redirect('/index.html')
+})
+
 app.post( '/createAcct', async (req,res)=> {
   // express.urlencoded will put your key value pairs 
   // into an object, where the key is the name of each
   // form field and the value is whatever the user entered
   console.log( req.body )
   
+
+  const user = await signin_collection.findOne({
+    username: req.body.username,
+    password: req.body.password
+  })
+
+  // below is *just a simple authentication example* 
+  // for A3, you should check username / password combos in your database
+  if(user){
+    console.log( "User Already Exists" )
+    res.redirect('noacct.html');
+  }
+
 
   const new_user = await signin_collection.insertOne({
     username: req.body.username,
