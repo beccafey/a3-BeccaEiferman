@@ -18,6 +18,11 @@ I used the Bootstrap CSS framework for two reasons. First of all, the GitHub lin
     - **morgan**: used to show my GET and POST requests in the terminal.
     - **serve-favicon**: I added a purple star favicon for my webpage.
     - **errorhandler**: displays error messages when an error occurs with the Express server.
+- **Lighthouse Tests**:
+    - **Performance**: I've ran this a couple different times and I keep getting numbers between 95-100 the font links take a bit I guess. So I don't know if I'll actually get points for this unfortunately. Sometimes it is 100 though so maybe I'll get lucky.
+    - **Accessibility**: Got a 100 on Google Lighthouse tests.
+    - **Best Practices**: Got a 100 on Google Lighthouse tests.
+    - **SEO**: Got a 100 on Google Lighthouse tests.
 
 ### Design/Evaluation Achievements
 - **Site Accessability Tips from W3C**:
