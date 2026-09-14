@@ -2,8 +2,8 @@ Assignment 3 - Persistence: Two-tier Web Application with Database, Express serv
 ===
 
 ## AgeSort
+By Becca Eiferman
 Link: 
-
 
 My project is Age Sort! First, an account must be created or signed into before the user is redirected to the main screen. In the "User Information" area enter you or your friends' name, birth year, and class, and then press the "Submit" button! The webpage will the calculate the age you turn in 2026, which is displayed in the "User Information" table below. The application sorts the data entires by either youngest to oldest or oldest to youngest depending on which button has been selected. There is also a "Delete" button to the right of each row in the table that allows a row of data to be removed from the webpage, and an "Edit" button that allows a user to edit an entry. There is also a button which leads to a page that contains all user data from every user of the webpage.
 One challenge I faced was not realizing I needed to have seperate collections of data for username/password information and added user information. I was very confused why my logins sometimes wouldn't work and why there were blank rows in my user information tables, before I realized I needed to split up the data. 
@@ -13,12 +13,28 @@ I used the Bootstrap CSS framework for two reasons. First of all, the GitHub lin
 
 ## Technical Achievements
 - **Express Middleware Packages Used**: 
-- cookie-session: keeps track of which user is currently logged in.
-- serve-static: serves index.html
-- morgan: used to show my GET and POST requests in the terminal.
-- serve-favicon: I added a purple star favicon for my webpage.
+    - **cookie-session**: keeps track of which user is currently logged in.
+    - **serve-static**: serves the files inside of the "public" folder to the browser for my webpage.
+    - **morgan**: used to show my GET and POST requests in the terminal.
+    - **serve-favicon**: I added a purple star favicon for my webpage.
+    - **errorhandler**: displays error messages when an error occurs with the Express server.
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
-
-
+- **Site Accessability Tips from W3C**:
+    - **1- Provide informative, unique page titles**: changed the title of each page from "CS4241 Assignment 3" to a summary of the page's content to better reflect the page.
+    - **2- Use headings to convey meaning and structure**: included a heading that summarizes each section of the webpage (for example, all forms and tables have descriptive headings).
+    - **3- Provide sufficient contrast between foreground and background**: the background is a gradient from pink to purple, while all text is a dark shade of purple on top of a white box to provide contrast from the background. All purple buttons have also been moved on top of the white boxes so they don't blend in with the purple background.
+    - **4- Don’t use color alone to convey information**: Required fields are indicated with a "*" symbol rather than a red color.
+    - **5- Provide clear and consistent navigation options**: All naviagtion between pages is located on a consistant purple button that clearly states which page the website will return to.
+    - **6- Ensure that form elements include clearly associated labels**: All form entries have labels at the level of the entry located to the left side, as English is a left to right read language.
+    - **7- Associate a label with every form control**: A "for" attribute has been added for each "label" element which corresponds to the id or variable name of the element.
+    - **8- Reflect the reading order in the code order**: HTML code is written so that elements occuring on the top of the page, which would be read first, are written first. This order occurs from the top to the bottom of the page in read order.
+    - **9- Use mark-up to convey meaning and structure**: The appropriate mark-up is used for headings, lists, tables, and all other elements on the webpage, and are used to properly structure the content.
+    - **10- Keep content clear and concise**: The amount of text on the page is limited to short, simple summaries of form/tables, input directions, headings and titles. I avoided adding unnecessarily complex words and phrases.
+    - **11- Provide clear instructions**: I indicated where to input information and have a clear button to submit it. If username or password is invalid, it is displayed and there is a button that redirects a user back. When a required field is hovered over, text appears that says "Please fill out this field", and if it is submitted without that required field the text appears as a pop-up.
+    - **12- Use headings and spacing to group related content**: All related areas are grouped together in a box with a summarizing heading. There are spaces in between each box containing unrealted information.
+- **CRAP Principles**:
+    - **Contrast**: For the main contrast, I chose to put text and other important elements in white text boxes so they can stand out from the bright, pink to purple gradient background. My goal for this was to draw attention to the main aspects of the sight so that they don’t blend in and get lost with the background. I did the same for the purple buttons, moving them onto the white boxes so they didn’t blend in with the background. For the text, I chose to keep the font, sizing (aside from title vs. header vs. paragraph text), and color consistent as I didn’t include too much text in my website and there wasn’t any specific area of text that I needed to emphasize. The only text color I changed was the text on the buttons, which I chose to use white text on a purple background instead of purple text on a white background so that both the button and the text would be visible.
+    - **Repetition**: As I mentioned briefly in contrast, I kept the font and color the same for all text on the website to help unify the look. I kept the same layout between pages including the pink to purple gradient background, a box included the title and a header along with some text, and then the following information included in boxes below that. All elements of each type had the same CSS styles applied to them to ensure unity between each page. For example, all boxes were white with the container mt-4 from Bootstrap applied to them, and all buttons were purple with white text. My goal with this was to create a sense of familiarity between each page while keeping a fairly simple design for the website.
+    - **Alignment**: For alignment, I tried to center most of my boxes, tables, forms, and text on the webpage as I felt it would give a cleaner, more organized setup for the elements. I’m not great at fancy or complicated alignments so most of the elements are simply stacked on top of each other, however I think this is an appropriate layout for a fairly simple website such as this one. My buttons are set up with a flex layout though, since they are smaller I wanted to put them in line with each other rather than stacked on top of each other to show they are related. I also made sure the boxes had the same width to help with the cleaner, more unified setup for my website.
+    - **Proximity**: My main idea for the topic of proximity was to group all related elements into a div box together. This was a good way to ensure that different groups of information were separated and wouldn’t all blend together to the reader. On top of each box, I put a clear heading which described either the purpose of the box or a summary of the information contained in it. If nearby buttons related to the information in the box, I moved them inside of the same div so they were more clearly grouped together. I also created different webpages for different functionalities of the website. For example, the sign in page, sign in failure page, individual user page, and all data pages are all separate web pages on the website. I also ensured that there was some spacing in between the boxes with the background visible between them to further separate different sections.

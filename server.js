@@ -2,23 +2,27 @@ require( 'dotenv' ).config()
 
 var favicon = require('serve-favicon');
 var path = require('path');
+const serveStatic = require('serve-static');
+var errorhandler = require('errorhandler');
 
 const express = require('express'),
     { MongoClient, ObjectId } = require("mongodb"),
     cookie = require( 'cookie-session' ),
     app = express()
 
-app.use( express.static( 'public' ) )
-app.use( express.json() )
-app.use(express.urlencoded({ extended:true }) )
+
+app.use( express.json() );
+app.use(serveStatic('public'));
+app.use(express.urlencoded({ extended:true }) );
 app.use( cookie({
   name: 'session',
   keys: ['key1', 'key2']
-}))
+}));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 var morgan = require('morgan');
 app.use(morgan('dev'));
+app.use(errorhandler());
 
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}/?appName=Cluster0`
