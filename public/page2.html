@@ -3,6 +3,7 @@
   <head>
     <title>My Info - AgeSort</title>
     <meta charset='utf-8' />
+    <meta name="description" content="Main content page for AgeSort, including a form to submit user information, a table displaying user informations, and buttons to edit and delete informaiton.">
     <script src='js/main.js' defer></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
     <link rel='stylesheet' href='css/main.css' />
@@ -25,40 +26,43 @@
       </div>
     </div>
     
-    <div class="container mt-4">
-      <div class="box2 p-4">
-        <h2>My Information</h2>
+    <main role="main">
+      <div class="container mt-4">
+        <div class="box2 p-4">
+          <h2>My Information</h2>
 
-        <form id="user_form">
-          <fieldset>
-            <legend>Insert New User Information</legend>
-            <div class="mb-3">
-              <label for="name" class="form-label">Name *:</label>
-              <input type="text" id="user_name" name="user_name" class="form-control" required/>
-            </div>
-            <div class="mb-3">
-              <label for="birth_year" class="form-label">Birth Year *:</label>
-              <input type="number" id="birth_year" name="birth_year" min="0" max="2026" class="form-control" required/>
-            </div>
-            <div class="mb-3">
-              <label for="user_class" class="form-label">
-                <span>Class:</span>
-              </label>
-              <select id="user_class" name="user_class" class="form-select">
-                <option value="Freshman">Freshman</option>
-                <option value="Sophomore">Sophomore</option>
-                <option value="Junior">Junior</option>
-                <option value="Senior">Senior</option>
-              </select>
-            </div>
-            <p class="button">
-              <button type="submit" class="btn btn-primary btn-purple">Submit!</button>
-            </p>
-          </fieldset>
-        </form>
+          <form id="user_form">
+            <fieldset>
+              <legend>Insert New User Information</legend>
+              <div class="mb-3">
+                <label for="name" class="form-label">Name *:</label>
+                <input type="text" id="user_name" name="user_name" class="form-control" required/>
+              </div>
+              <div class="mb-3">
+                <label for="birth_year" class="form-label">Birth Year *:</label>
+                <input type="number" id="birth_year" name="birth_year" min="0" max="2026" class="form-control" required/>
+              </div>
+              <div class="mb-3">
+                <label for="user_class" class="form-label">
+                  <span>Class:</span>
+                </label>
+                <select id="user_class" name="user_class" class="form-select">
+                  <option value="Freshman">Freshman</option>
+                  <option value="Sophomore">Sophomore</option>
+                  <option value="Junior">Junior</option>
+                  <option value="Senior">Senior</option>
+                </select>
+              </div>
+              <p class="button">
+                <button type="submit" class="btn btn-primary btn-purple">Submit!</button>
+              </p>
+            </fieldset>
+          </form>
+        </div>
+      
       </div>
+    </main>
     
-    </div>
     
     
 
